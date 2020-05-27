@@ -2,17 +2,19 @@ import React from "react";
 import classes from "./TrackInfo.module.css";
 
 const TrackInfo = (props) => {
+  const albumCover = props.albumCover ? (
+    <img className={classes.AlbumCover} src={props.albumCover}></img>
+  ) : (
+    <div className={classes.CoverPlaceHolder}></div>
+  );
   return (
     <div className={classes.TrackInfo}>
-      <img
-        className={classes.AlbumCover}
-        src="https://vignette.wikia.nocookie.net/wherearetheavocados/images/0/06/DyGkj-cU0AAGLH-.jpeg/revision/latest?cb=20190525003458"
-      ></img>
+      {albumCover}
       <div className={classes.Info}>
         <p>
-          <strong>Bad Guy</strong>
+          <strong>{props.title}</strong>
         </p>
-        <p>Billie Eilish</p>
+        <p>{props.artist}</p>
       </div>
     </div>
   );

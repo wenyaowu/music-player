@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import ReactPlayer from "react-player";
+import { connect } from "react-redux";
 import classes from "./MusicPlayer.module.css";
+import { play, pause } from "../../store/actions";
 import TrackInfo from "../../components/MusicPlayer/TrackInfo/TrackInfo";
 import PlayControls from "../../components/MusicPlayer/PlayerControls/PlayerControls";
 import VolumeControl from "../../components/MusicPlayer/VolumeControl/VolumeControl";
@@ -11,19 +13,6 @@ class MusicPlayer extends Component {
     progress: 0,
     buffer: 0,
     volume: null,
-    track: {},
-  };
-
-  onPlayHandler = () => {
-    this.setState({
-      isPlaying: true,
-    });
-  };
-
-  onPauseHandler = () => {
-    this.setState({
-      isPlaying: false,
-    });
   };
 
   onSkipPreviousHandler = () => {
@@ -53,8 +42,8 @@ class MusicPlayer extends Component {
     return (
       <div className={classes.MusicPlayer}>
         <ReactPlayer
-          url="https://soundcloud.com/billieeilish/bad-guy"
-          playing={this.state.isPlaying}
+          url={this.props.track.url}
+          playing={this.props.playing}
           onProgress={this.onProgessHandler}
           progressInterval="500"
           height="0"
@@ -62,14 +51,18 @@ class MusicPlayer extends Component {
           ref={this.getPlayerRef}
           volume={this.state.volume}
         />
-        <TrackInfo />
+        <TrackInfo
+          albumCover={this.props.track.albumCover}
+          artist={this.props.track.artist}
+          title={this.props.track.title}
+        />
         <PlayControls
-          isPlaying={this.state.isPlaying}
+          isPlaying={this.props.playing}
           progress={this.state.progress}
           buffer={this.state.buffer}
           onSkipPrevious={this.onSkipPreviousHandler}
-          onPause={this.onPauseHandler}
-          onPlay={this.onPlayHandler}
+          onPause={this.props.onPause}
+          onPlay={this.props.onPlay}
           onSkipNext={this.onSkipNextHandler}
         />
         <VolumeControl onVolumeChanged={this.onVolumeChangeHander} />
@@ -78,4 +71,14 @@ class MusicPlayer extends Component {
   }
 }
 
-export default MusicPlayer;
+const mapStateToProps = (state) => ({
+  track: state.player.track,
+  playing: state.player.playing,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onPlay: () => dispatch(play()),
+  onPause: () => dispatch(pause()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MusicPlayer);

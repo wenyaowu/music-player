@@ -1,18 +1,24 @@
 .TrackInfo {
-    height: 100%;
-    margin: 0px;
-    display: flex;
-    padding: 0 15px 0 15px;
-    justify-content: space-around;
-    align-items: center;
+  height: 100%;
+  margin: 0px;
+  display: flex;
+  padding: 0 15px 0 15px;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .AlbumCover {
-    height: 75px;
-    width: 75px;
+  height: 75px;
+  width: 75px;
 }
 
 .Info {
-    padding-left: 10px;
-    color: white;
+  padding-left: 10px;
+  color: white;
+}
+
+.AlbumCoverPlaceHolder {
+  border: solid 21px lightslategray;
+  width: 75px;
+  height: 75px;
 }

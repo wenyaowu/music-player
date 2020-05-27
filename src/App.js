@@ -1,12 +1,17 @@
 import React from "react";
+import { Route, Switch } from "react-router-dom";
 import "./App.css";
 import Layout from "./containers/Layout/Layout";
+import PlayList from "./containers/Playlist/Playlist"
 
 function App() {
   return (
     <div className="App">
       <Layout>
-        <h1>Hello World</h1>
+        <Switch>
+          <Route path="/playlist" component={PlayList}></Route>
+          <Route path="/" component={PlayList} />
+        </Switch>
       </Layout>
     </div>
   );
