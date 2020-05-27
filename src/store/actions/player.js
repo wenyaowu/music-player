@@ -7,6 +7,14 @@ export const playTrack = (track) => {
   };
 };
 
+export const playPlaylist = (tracks, from) => {
+  return {
+    type: actionTypes.PLAY_PLAYLIST,
+    queue: tracks,
+    from,
+  };
+};
+
 export const play = () => {
   return {
     type: actionTypes.PLAY,
@@ -16,5 +24,17 @@ export const play = () => {
 export const pause = () => {
   return {
     type: actionTypes.PAUSE,
+  };
+};
+
+export const next = () => {
+  return {
+    type: actionTypes.NEXT,
+  };
+};
+
+export const previous = () => {
+  return {
+    type: actionTypes.PREVIOUS,
   };
 };

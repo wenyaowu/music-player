@@ -26,7 +26,7 @@ const Tracks = (props) => {
             <TableRow key={`${track.title}-${idx}`}>
               <TableCell align="center">
                 <PlayCircleOutlineIcon
-                  onClick={(event) => props.onTrackSelected(track)}
+                  onClick={() => props.onTrackSelected(props.tracks, idx)}
                 />
               </TableCell>
               <TableCell component="th" scope="row">

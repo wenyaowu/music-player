@@ -2,7 +2,8 @@ import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
   playing: false,
-  track: {},
+  queue: [],
+  currentPlayingIndex: 0,
 };
 
 const reducer = (state = initialState, action) => {
@@ -11,7 +12,16 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         playing: true,
-        track: action.track,
+        queue: [action.track],
+        currentPlayingIndex: 0,
+      };
+    }
+    case actionTypes.PLAY_PLAYLIST: {
+      return {
+        ...state,
+        playing: true,
+        queue: action.queue,
+        currentPlayingIndex: action.from ? action.from : 0,
       };
     }
     case actionTypes.PLAY: {
@@ -25,6 +35,34 @@ const reducer = (state = initialState, action) => {
         ...state,
         playing: false,
       };
+    }
+    case actionTypes.NEXT: {
+      if (state.currentPlayingIndex >= state.queue.length - 1) {
+        return {
+          ...state,
+          currentPlayingIndex: 0,
+          playing: false,
+        };
+      } else {
+        return {
+          ...state,
+          currentPlayingIndex: state.currentPlayingIndex + 1,
+        };
+      }
+    }
+    case actionTypes.PREVIOUS: {
+      if (state.currentPlayingIndex <= 0) {
+        return {
+          ...state,
+          currentPlayingIndex: 0,
+          playing: false,
+        };
+      } else {
+        return {
+          ...state,
+          currentPlayingIndex: state.currentPlayingIndex - 1,
+        };
+      }
     }
     default: {
       return {

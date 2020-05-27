@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getPlaylist, playTrack } from "../../store/actions";
+import { getPlaylist, playPlaylist } from "../../store/actions";
 import Tracks from "../../components/Tracks/Tracks";
 
 class Playlist extends Component {
@@ -28,7 +28,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispathToProps = (dispatch) => ({
   onPlaylistInit: (playlistId) => dispatch(getPlaylist(playlistId)),
-  onTrackSelected: (track) => dispatch(playTrack(track)),
+  onTrackSelected: (tracks, idx) => dispatch(playPlaylist(tracks, idx)),
 });
 
 export default connect(mapStateToProps, mapDispathToProps)(Playlist);

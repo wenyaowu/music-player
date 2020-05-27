@@ -1,2 +1,2 @@
 export { getPlaylist } from "./playlist";
-export { playTrack, play, pause } from "./player";
+export { playPlaylist, play, pause, next, previous } from "./player";
