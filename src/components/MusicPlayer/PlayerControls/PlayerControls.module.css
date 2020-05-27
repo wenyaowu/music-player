@@ -1,0 +1,20 @@
+.PlayerControls {
+    flex-grow: 1;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    color: white;
+}
+
+.Controls {
+    padding: 10px 0 5px 0;
+}
+
+.Icon {
+    cursor: pointer;
+}
+
+.Progress {
+    width: 75%;
+}

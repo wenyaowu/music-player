@@ -1,0 +1,32 @@
+.Top {
+  width: auto;
+  display: flex;
+  flex-grow: 1;
+}
+
+.Bottom {
+  display: flex;
+  background-color: blue;
+  height: 100px;
+}
+
+.Navbar {
+  width: 200px;
+  background-color: red;
+}
+
+.Main {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+}
+
+.Search {
+  background-color: green;
+  height: 50px;
+}
+
+.Content {
+  background-color: yellow;
+  flex-grow: 1;
+}
