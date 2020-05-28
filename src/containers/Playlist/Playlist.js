@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getPlaylist, playPlaylist } from "../../store/actions";
 import Tracks from "../../components/Tracks/Tracks";
+import classes from "./Playlist.module.css";
 
 class Playlist extends Component {
   componentDidMount() {
@@ -10,7 +11,7 @@ class Playlist extends Component {
 
   render() {
     return (
-      <div>
+      <div className={classes.Playlist}>
         <Tracks
           tracks={this.props.tracks}
           onTrackSelected={this.props.onTrackSelected}

@@ -10,11 +10,6 @@
   height: 100px;
 }
 
-.Navbar {
-  width: 200px;
-  background-color: red;
-}
-
 .Main {
   display: flex;
   flex-grow: 1;
@@ -22,11 +17,12 @@
 }
 
 .Search {
-  background-color: green;
+  background-color: #121212;
+  color: white;
   height: 50px;
 }
 
 .Content {
-  background-color: yellow;
+  background-color: #232323;
   flex-grow: 1;
 }

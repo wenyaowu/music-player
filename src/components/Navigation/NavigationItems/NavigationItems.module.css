@@ -1,0 +1,9 @@
+.NavigationItems {
+    padding: 50px 0 10px 0
+}
+
+.Link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

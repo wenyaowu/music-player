@@ -30,6 +30,9 @@ class MusicPlayer extends Component {
   };
 
   render() {
+    /**
+     * TODO: Enhance this
+     */
     const currentTrack =
       this.props.queue.length <= 0
         ? null
