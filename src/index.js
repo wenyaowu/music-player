@@ -9,11 +9,20 @@ import thunk from "redux-thunk";
 import { createStore, applyMiddleware, compose, combineReducers } from "redux";
 import playlistReducer from "./store/reducers/playlist";
 import playerReducer from "./store/reducers/player";
+import authReducer from "./store/reducers/auth";
+import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
+
+const theme = createMuiTheme({
+  palette: {
+    primary: { main: "#1cb954" },
+  },
+});
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const rootReducer = combineReducers({
   playlist: playlistReducer,
   player: playerReducer,
+  auth: authReducer,
 });
 
 const store = createStore(
@@ -23,11 +32,13 @@ const store = createStore(
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </Provider>
+    <MuiThemeProvider theme={theme}>
+      <Provider store={store}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </Provider>
+    </MuiThemeProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

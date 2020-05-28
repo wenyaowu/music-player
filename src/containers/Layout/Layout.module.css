@@ -16,12 +16,6 @@
   flex-direction: column;
 }
 
-.Search {
-  background-color: #121212;
-  color: white;
-  height: 50px;
-}
-
 .Content {
   background-color: #232323;
   flex-grow: 1;

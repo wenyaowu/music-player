@@ -1,31 +1,41 @@
 import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
-import { getUserPlaylists } from "./store/actions";
 import "./App.css";
 import Layout from "./containers/Layout/Layout";
 import PlayList from "./containers/Playlist/Playlist";
-
+import Logout from "./containers/Auth/Logout/Logout";
+import Feed from "./containers/Feed/Feed";
+import Auth from "./containers/Auth/Auth";
+import { authInit } from "./store/actions";
 class App extends Component {
   componentDidMount() {
-    this.props.onLoggedIn();
+    this.props.onAuthInit();
   }
   render() {
     return (
       <div className="App">
-        <Layout>
-          <Switch>
-            <Route path="/playlist" component={PlayList}></Route>
-            <Route path="/" component={PlayList} />
-          </Switch>
-        </Layout>
+        {this.props.isAuth ? (
+          <Layout>
+            <Switch>
+              <Route path="/playlist" component={PlayList}></Route>
+              <Route path="/logout" component={Logout}></Route>
+              <Route path="/" component={Feed} />
+            </Switch>
+          </Layout>
+        ) : (
+          <Auth />
+        )}
       </div>
     );
   }
 }
-
-const mapDispatchToProps = (dispatch) => ({
-  onLoggedIn: () => dispatch(getUserPlaylists("1234")),
+const mapStateToProps = (state) => ({
+  isAuth: state.auth.token !== null,
 });
 
-export default connect(null, mapDispatchToProps)(App);
+const mapDispatchToProps = (dispatch) => ({
+  onAuthInit: () => dispatch(authInit()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

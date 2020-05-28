@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { getPlaylist, playPlaylist } from "../../store/actions";
 import Tracks from "../../components/Tracks/Tracks";
 import classes from "./Playlist.module.css";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 class Playlist extends Component {
   componentDidMount() {
@@ -12,13 +13,15 @@ class Playlist extends Component {
   render() {
     return (
       <div className={classes.Playlist}>
-        {this.props.selectedPlaylist ? (
+        {this.props.loading ? (
+          <CircularProgress />
+        ) : this.props.selectedPlaylist ? (
           <Tracks
             tracks={this.props.selectedPlaylist.tracks}
             onTrackSelected={this.props.onTrackSelected}
           />
         ) : (
-          <p>Select Playlist</p>
+          <p>Select Playlist To Start</p>
         )}
       </div>
     );

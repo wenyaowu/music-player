@@ -10,4 +10,6 @@
     list-style: none;
     padding: 5px 0 5px 0;
     font-size: 0.875rem;
+    cursor: pointer;
 }
+

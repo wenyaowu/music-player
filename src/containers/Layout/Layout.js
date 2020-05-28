@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import classes from "./Layout.module.css";
 import MusicPlayer from "../MusicPlayer/MusicPlayer";
 import Navigation from '../Navigation/Navigation';
-
+import TopBar from '../TopBar/TopBar';
 class Layout extends Component {
   render() {
     return (
@@ -11,7 +11,7 @@ class Layout extends Component {
           <Navigation/>
 
           <div className={classes.Main}>
-            <div className={classes.Search}>Search Bar</div>
+            <TopBar/>
             <main className={classes.Content}>{this.props.children}</main>
           </div>
         </div>

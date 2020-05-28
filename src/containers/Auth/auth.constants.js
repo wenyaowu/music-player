@@ -1,0 +1,4 @@
+export const AuthSteps = {
+  WELCOME: "WELCOME",
+  AUTHENTICATION: "AUTHENTICATION"
+};

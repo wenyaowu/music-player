@@ -1,0 +1,15 @@
+.SignUp {
+    width: 80%;
+    margin: auto;
+    word-wrap: break-word;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    color: "#fff",
+}
+
+.Login {
+    text-decoration-line: underline;
+    cursor: pointer;
+}
