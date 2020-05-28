@@ -3,8 +3,7 @@ import { connect } from "react-redux";
 import { getPlaylist, playPlaylist } from "../../store/actions";
 import Tracks from "../../components/Tracks/Tracks";
 import classes from "./Playlist.module.css";
-import CircularProgress from "@material-ui/core/CircularProgress";
-
+import Spinner from '../../components/UI/Spinner/Spinner'
 class Playlist extends Component {
   componentDidMount() {
     this.props.onPlaylistInit("HbczyUgZUwXbvVJCBeUX");
@@ -14,7 +13,7 @@ class Playlist extends Component {
     return (
       <div className={classes.Playlist}>
         {this.props.loading ? (
-          <CircularProgress />
+          <Spinner />
         ) : this.props.selectedPlaylist ? (
           <Tracks
             tracks={this.props.selectedPlaylist.tracks}

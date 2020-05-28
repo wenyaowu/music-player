@@ -5,8 +5,14 @@ import Playlists from "../../components/Navigation/Playlists/Playlists";
 import NavigationItems from "../../components/Navigation/NavigationItems/NavigationItems";
 import { getPlaylist, getUserPlaylists } from "../../store/actions";
 import { withRouter } from "react-router-dom";
+import Modal from "../../components/UI/Modal/Modal";
+import NewPlaylist from "../NewPlaylist/NewPlaylist";
 
 class Navigation extends Component {
+  state = {
+    addPlaylistModalOpened: false,
+  };
+
   componentDidMount() {
     this.props.onNavigationInit(this.props.userId);
   }
@@ -14,7 +20,16 @@ class Navigation extends Component {
     this.props.onPlaylistInit(playlistId);
     this.props.history.push("/playlist");
   };
-
+  onAddPlaylistClickedHandler = () => {
+    this.setState({
+      addPlaylistModalOpened: true,
+    });
+  };
+  onModalClosedHandler = () => {
+    this.setState({
+      addPlaylistModalOpened: false,
+    });
+  };
   render() {
     return (
       <div className={classes.Navigation}>
@@ -22,7 +37,14 @@ class Navigation extends Component {
         <Playlists
           playlists={this.props.playlists}
           onPlaylistClicked={this.onPlaylistClickedHandlder}
+          onAddPlaylistClicked={this.onAddPlaylistClickedHandler}
         />
+        <Modal
+          show={this.state.addPlaylistModalOpened}
+          modalClosed={this.onModalClosedHandler}
+        >
+          <NewPlaylist />
+        </Modal>
       </div>
     );
   }

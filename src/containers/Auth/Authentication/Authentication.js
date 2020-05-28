@@ -74,7 +74,11 @@ class Authentication extends Component {
     }
     return (
       <div classes={classes.SignUp}>
-        <h2>Play any song on all platforms, in one application</h2>
+        <h2>
+          {this.props.isSignUp
+            ? "Sign up for free to access music on all platforms"
+            : "Sign in to start listen to music from everywhere"}
+        </h2>
         <form>
           {form.map((f) => {
             return (

@@ -1,15 +1,26 @@
 .Playlists {
-    flex-grow: 1;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+.ListContainer {
+  flex-grow: 1;
+}
+.NewPlaylist {
+  display: flex;
+  align-items: center;
+  border-top: 1px solid #232323;
+  padding: 20px;
+  cursor: pointer;
 }
 
 .List {
-    padding: 0;
+  padding: 0;
 }
 
 .ListItem {
-    list-style: none;
-    padding: 5px 0 5px 0;
-    font-size: 0.875rem;
-    cursor: pointer;
+  list-style: none;
+  padding: 5px 0 5px 0;
+  font-size: 0.875rem;
+  cursor: pointer;
 }
-
