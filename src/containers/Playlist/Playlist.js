@@ -12,10 +12,14 @@ class Playlist extends Component {
   render() {
     return (
       <div className={classes.Playlist}>
-        <Tracks
-          tracks={this.props.tracks}
-          onTrackSelected={this.props.onTrackSelected}
-        />
+        {this.props.selectedPlaylist ? (
+          <Tracks
+            tracks={this.props.selectedPlaylist.tracks}
+            onTrackSelected={this.props.onTrackSelected}
+          />
+        ) : (
+          <p>Select Playlist</p>
+        )}
       </div>
     );
   }
@@ -24,7 +28,7 @@ class Playlist extends Component {
 const mapStateToProps = (state) => ({
   loading: state.playlist.loading,
   error: state.playlist.error,
-  tracks: state.playlist.tracks,
+  selectedPlaylist: state.playlist.selectedPlaylist,
 });
 
 const mapDispathToProps = (dispatch) => ({

@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import classes from "./Layout.module.css";
 import MusicPlayer from "../MusicPlayer/MusicPlayer";
-import Navigation from '../../components/Navigation/Navigation';
+import Navigation from '../Navigation/Navigation';
 
 class Layout extends Component {
   render() {
