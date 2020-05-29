@@ -1,5 +1,39 @@
 import * as actionTypes from "./actionTypes";
 import db from "../../firestore";
+import * as firebase from "firebase/app";
+
+export const addTrackToPlaylist = (playlistId, track) => {
+  return async (dispatch) => {
+    dispatch({
+      type: actionTypes.ADD_TRACK_TO_PLAYLIST,
+    });
+    try {
+      await db
+        .collection("playlists")
+        .doc(playlistId)
+        .update({
+          tracks: firebase.firestore.FieldValue.arrayUnion(track),
+        });
+      dispatch(addTrackSuccess(playlistId, track));
+    } catch (err) {
+      console.log('fail', err)
+      dispatch(addTrackFailed(err));
+    }
+  };
+};
+export const addTrackSuccess = (playlistId, track) => {
+  return {
+    type: actionTypes.ADD_TRACK_TO_PLAYLIST_SUCCESS,
+    track,
+    playlistId,
+  };
+};
+export const addTrackFailed = (error) => {
+  return {
+    type: actionTypes.ADD_TRACK_TO_PLAYLIST_FAILED,
+    error,
+  };
+};
 
 export const initCreatePlaylist = () => {
   return {
@@ -59,11 +93,12 @@ export const getPlaylist = (playlistId) => {
     });
     try {
       let doc = await db.collection("playlists").doc(playlistId).get();
-      dispatch(getPlaylistSuccess({
-        id:doc.id,
-        ...doc.data()
-      }));
-      
+      dispatch(
+        getPlaylistSuccess({
+          id: doc.id,
+          ...doc.data(),
+        })
+      );
     } catch (err) {
       dispatch(getPlaylistFailed(err));
     }

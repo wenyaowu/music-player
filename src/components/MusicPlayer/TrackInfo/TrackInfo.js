@@ -2,8 +2,8 @@ import React from "react";
 import classes from "./TrackInfo.module.css";
 
 const TrackInfo = (props) => {
-  const albumCover = props.albumCover ? (
-    <img className={classes.AlbumCover} src={props.albumCover} alt="album cover"></img>
+  const albumCover = props.image ? (
+    <img className={classes.AlbumCover} src={props.image} alt="album cover"></img>
   ) : (
     <div className={classes.CoverPlaceHolder}></div>
   );

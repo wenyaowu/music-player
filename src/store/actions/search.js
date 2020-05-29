@@ -1,15 +1,26 @@
 import * as actionTypes from "./actionTypes";
+import soundCloud from "../../soundCloud";
 
 export const search = (searchTerm) => {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch({
       type: actionTypes.SEARCH_INIT,
     });
     try {
-      setTimeout(() => {
-        let results = [{ name: "test1" }, { name: "test2" }];
-        dispatch(searchSuccess(results));
-      }, 1000);
+      let results = [];
+      let scResults = await soundCloud.search(searchTerm);
+      scResults.forEach((track) => {
+        results.push({
+          source: "soundcloud",
+          title: track.title,
+          image: track.artwork_url,
+          artist: track.user.username,
+          url: track.permalink_url,
+          description: track.description,
+        });
+      });
+
+      dispatch(searchSuccess(results));
     } catch (err) {
       dispatch(searchFailed(err));
     }

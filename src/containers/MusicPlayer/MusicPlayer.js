@@ -48,13 +48,14 @@ class MusicPlayer extends Component {
               onProgress={this.onProgessHandler}
               onEnded={this.props.onNext}
               progressInterval={500}
-              height="0"
-              width="0"
+              height="1"
+              width="1"
+              style={{display:"none"}}
               ref={this.getPlayerRef}
               volume={this.state.volume}
             />
             <TrackInfo
-              albumCover={currentTrack.albumCover}
+              image={currentTrack.image}
               artist={currentTrack.artist}
               title={currentTrack.title}
             />

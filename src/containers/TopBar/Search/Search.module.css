@@ -1,0 +1,23 @@
+.Search {
+    width:50%;
+    float: left;
+    position:relative;
+}
+
+.DropdownContent {
+    /* display: none; */
+    position: absolute;
+    /* background-color: #333; */
+    background-color: black;
+    z-index: 3;
+    width: 100%;
+}
+
+
+.DropdownContent p {
+    color: black;
+}
+
+.Hide {
+    display: none;
+}
