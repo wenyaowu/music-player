@@ -2,18 +2,11 @@
   display: flex;
   background-color: #121212;
   color: white;
-  height: 50px;
+  height: 70px;
+  justify-content: center;
   align-items: center;
 }
 
 .Search {
     flex-grow: 1;
-}
-
-.Logout {
-    padding-right: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    cursor: pointer;
 }

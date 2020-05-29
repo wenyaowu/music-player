@@ -105,22 +105,22 @@ class Authentication extends Component {
           {this.props.isSignUp ? (
             <p style={{ color: "#fff" }}>
               Already have an account?{" "}
-              <a
-                className={classes.Login}
+              <button 
+                className={classes.SwitchModeButton}
                 onClick={this.props.onSwitchToSignIn}
               >
                 LOGIN
-              </a>
+              </button>
             </p>
           ) : (
             <p style={{ color: "#fff" }}>
               Don't have an account?{" "}
-              <a
-                className={classes.Login}
+              <button
+                className={classes.SwitchModeButton}
                 onClick={this.props.onSwitchToSignUp}
               >
                 SIGN UP
-              </a>
+              </button>
             </p>
           )}
         </form>

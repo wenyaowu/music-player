@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import Input from "../../components/UI/Input/Input";
 import Button from "../../components/UI/Button/Button";
-
+import { connect } from "react-redux";
+import { createPlaylist } from "../../store/actions";
 class NewPlaylist extends Component {
   state = {
     form: {
@@ -47,6 +48,15 @@ class NewPlaylist extends Component {
     this.setState({ form: updatedForm, formIsValid });
   };
 
+  onSubmitHandler = (event) => {
+    event.preventDefault();
+    this.props.onCreatePlaylist(
+      this.props.userId,
+      this.state.form.name.value,
+      this.state.form.description.value
+    );
+  };
+
   render() {
     const form = [];
     for (let key of Object.keys(this.state.form)) {
@@ -58,7 +68,7 @@ class NewPlaylist extends Component {
     return (
       <div>
         <h1>Add new playlist</h1>
-        <form>
+        <form onSubmit={this.onSubmitHandler}>
           {form.map((f) => {
             return (
               <Input
@@ -73,10 +83,7 @@ class NewPlaylist extends Component {
               />
             );
           })}
-          <Button
-            disabled={!this.state.formIsValid}
-            onClick={this.props.isSignUp ? this.onSignUp : this.onSignIn}
-          >
+          <Button disabled={!this.state.formIsValid} type="submit">
             Create
           </Button>
         </form>
@@ -85,4 +92,13 @@ class NewPlaylist extends Component {
   }
 }
 
-export default NewPlaylist;
+const mapStateToProps = (state) => ({
+  userId: state.auth.userId,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onCreatePlaylist: (userId, name, description) =>
+    dispatch(createPlaylist(userId, name, description)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewPlaylist);

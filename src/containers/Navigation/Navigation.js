@@ -3,16 +3,17 @@ import { connect } from "react-redux";
 import classes from "./Navigation.module.css";
 import Playlists from "../../components/Navigation/Playlists/Playlists";
 import NavigationItems from "../../components/Navigation/NavigationItems/NavigationItems";
-import { getPlaylist, getUserPlaylists } from "../../store/actions";
+import {
+  getPlaylist,
+  getUserPlaylists,
+  initCreatePlaylist,
+  cancelCreatePlaylist,
+} from "../../store/actions";
 import { withRouter } from "react-router-dom";
 import Modal from "../../components/UI/Modal/Modal";
 import NewPlaylist from "../NewPlaylist/NewPlaylist";
 
 class Navigation extends Component {
-  state = {
-    addPlaylistModalOpened: false,
-  };
-
   componentDidMount() {
     this.props.onNavigationInit(this.props.userId);
   }
@@ -21,15 +22,12 @@ class Navigation extends Component {
     this.props.history.push("/playlist");
   };
   onAddPlaylistClickedHandler = () => {
-    this.setState({
-      addPlaylistModalOpened: true,
-    });
+    this.props.onInitCreatePlaylist();
   };
   onModalClosedHandler = () => {
-    this.setState({
-      addPlaylistModalOpened: false,
-    });
+    this.props.onCancelCreatePlaylist();
   };
+
   render() {
     return (
       <div className={classes.Navigation}>
@@ -40,7 +38,7 @@ class Navigation extends Component {
           onAddPlaylistClicked={this.onAddPlaylistClickedHandler}
         />
         <Modal
-          show={this.state.addPlaylistModalOpened}
+          show={this.props.creating}
           modalClosed={this.onModalClosedHandler}
         >
           <NewPlaylist />
@@ -51,11 +49,14 @@ class Navigation extends Component {
 }
 
 const mapStateToProps = (state) => ({
+  creating: state.playlist.creating,
   playlists: state.playlist.playlists,
   userId: state.auth.userId,
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  onInitCreatePlaylist: () => dispatch(initCreatePlaylist()),
+  onCancelCreatePlaylist: () => dispatch(cancelCreatePlaylist()),
   onNavigationInit: (userId) => dispatch(getUserPlaylists(userId)),
   onPlaylistInit: (playlistId) => dispatch(getPlaylist(playlistId)),
 });

@@ -21,10 +21,10 @@ const Playlists = (props) => {
         <ul className={classes.List}>{playlists}</ul>
       </div>
 
-      <a className={classes.NewPlaylist} onClick={props.onAddPlaylistClicked}>
+      <button className={classes.NewPlaylist} onClick={props.onAddPlaylistClicked}>
         <AddCircleOutlineIcon />
         <span style={{ paddingLeft: "10px" }}>New Playlist</span>
-      </a>
+      </button>
     </div>
   );
 };

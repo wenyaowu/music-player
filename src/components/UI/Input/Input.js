@@ -9,7 +9,6 @@ const StyledInput = withStyles({
     backgroundColor: "#424141",
     margin: "15px auto 10px auto",
     width: "80%",
-    // height: "40px",
     borderRadius: 5,
     color: "#fff",
     fontSize: "15px"

@@ -9,9 +9,13 @@
 .NewPlaylist {
   display: flex;
   align-items: center;
+  border: 0px;
   border-top: 1px solid #232323;
   padding: 20px;
   cursor: pointer;
+  background: none;
+  color: white;
+  font-size: 15px;
 }
 
 .List {

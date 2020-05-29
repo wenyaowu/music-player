@@ -3,22 +3,27 @@ import { connect } from "react-redux";
 import { getPlaylist, playPlaylist } from "../../store/actions";
 import Tracks from "../../components/Tracks/Tracks";
 import classes from "./Playlist.module.css";
-import Spinner from '../../components/UI/Spinner/Spinner'
+import Spinner from "../../components/UI/Spinner/Spinner";
 class Playlist extends Component {
-  componentDidMount() {
-    this.props.onPlaylistInit("HbczyUgZUwXbvVJCBeUX");
-  }
+  componentDidMount() {}
 
   render() {
+    let tracks =
+      this.props.selectedPlaylist &&
+      this.props.selectedPlaylist.tracks.length > 0 ? (
+        <Tracks
+          tracks={this.props.selectedPlaylist.tracks}
+          onTrackSelected={this.props.onTrackSelected}
+        />
+      ) : (
+        <p>Add songs to start your playlist</p>
+      );
     return (
       <div className={classes.Playlist}>
         {this.props.loading ? (
           <Spinner />
         ) : this.props.selectedPlaylist ? (
-          <Tracks
-            tracks={this.props.selectedPlaylist.tracks}
-            onTrackSelected={this.props.onTrackSelected}
-          />
+          tracks
         ) : (
           <p>Select Playlist To Start</p>
         )}

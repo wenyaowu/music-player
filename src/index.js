@@ -10,6 +10,7 @@ import { createStore, applyMiddleware, compose, combineReducers } from "redux";
 import playlistReducer from "./store/reducers/playlist";
 import playerReducer from "./store/reducers/player";
 import authReducer from "./store/reducers/auth";
+import searchReducer from "./store/reducers/search";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 
 const theme = createMuiTheme({
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
   playlist: playlistReducer,
   player: playerReducer,
   auth: authReducer,
+  search: searchReducer,
 });
 
 const store = createStore(

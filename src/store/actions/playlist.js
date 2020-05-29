@@ -1,5 +1,56 @@
 import * as actionTypes from "./actionTypes";
-import axios from "axios";
+import db from "../../firestore";
+
+export const initCreatePlaylist = () => {
+  return {
+    type: actionTypes.INIT_CREATE_PLAYLIST,
+  };
+};
+
+export const cancelCreatePlaylist = () => {
+  return {
+    type: actionTypes.CANCEL_CREATE_PLAYLIST,
+  };
+};
+
+export const createPlaylist = (userId, name, description) => {
+  return async (dispatch) => {
+    dispatch({
+      type: actionTypes.CREATE_PLAYLIST,
+    });
+    try {
+      const playlist = {
+        name,
+        description,
+        userId,
+        tracks: [],
+      };
+      let docRef = await db.collection("playlists").add(playlist);
+      dispatch(
+        createPlaylistSuccess({
+          id: docRef.id,
+          ...playlist,
+        })
+      );
+    } catch (err) {
+      dispatch(createPlaylistFailed(err));
+    }
+  };
+};
+
+export const createPlaylistSuccess = (playlist) => {
+  return {
+    type: actionTypes.CREATE_PLAYLIST_SUCCESS,
+    playlist,
+  };
+};
+
+export const createPlaylistFailed = (error) => {
+  return {
+    type: actionTypes.CREATE_PLAYLIST_FAILED,
+    error,
+  };
+};
 
 export const getPlaylist = (playlistId) => {
   return async (dispatch) => {
@@ -7,10 +58,12 @@ export const getPlaylist = (playlistId) => {
       type: actionTypes.GET_PLAYLIST,
     });
     try {
-      let { data } = await axios.get(
-        `https://music-player-f9307.firebaseio.com/playlists/${playlistId}.json`
-      );
-      dispatch(getPlaylistSuccess(data));
+      let doc = await db.collection("playlists").doc(playlistId).get();
+      dispatch(getPlaylistSuccess({
+        id:doc.id,
+        ...doc.data()
+      }));
+      
     } catch (err) {
       dispatch(getPlaylistFailed(err));
     }
@@ -23,16 +76,16 @@ export const getUserPlaylists = (userId) => {
       type: actionTypes.GET_USER_PLAYLISTS,
     });
     try {
-      let { data } = await axios.get(
-        `https://music-player-f9307.firebaseio.com/playlists.json?orderBy="userId"&eqaulTo="${userId}"`
-      );
       const playlists = [];
-      for (let key of Object.keys(data)) {
+      let querySnapshot = await db.collection("playlists").get();
+
+      querySnapshot.forEach((doc) => {
         playlists.push({
-          ...data[key],
-          id: key,
+          ...doc.data(),
+          id: doc.id,
         });
-      }
+      });
+
       dispatch(getUserPlaylistsSuccess(playlists));
     } catch (err) {
       dispatch(getUserPlaylistsFailed(err));
