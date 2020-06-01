@@ -8,6 +8,7 @@ import Logout from "./containers/Auth/Logout/Logout";
 import Feed from "./containers/Feed/Feed";
 import Auth from "./containers/Auth/Auth";
 import { authInit } from "./store/actions";
+import Spotify from "./containers/Auth/Spotify/Spotify";
 class App extends Component {
   componentDidMount() {
     this.props.onAuthInit();
@@ -20,6 +21,7 @@ class App extends Component {
             <Switch>
               <Route path="/playlist" component={PlayList}></Route>
               <Route path="/logout" component={Logout}></Route>
+              <Route path="/spotify-callback" component={Spotify}></Route>
               <Route path="/" component={Feed} />
             </Switch>
           </Layout>

@@ -33,6 +33,7 @@ export const logout = () => {
   localStorage.removeItem("token");
   localStorage.removeItem("expireAt");
   localStorage.removeItem("userId");
+  localStorage.removeItem("spotify-token");
   return {
     type: actionTypes.AUTH_LOGOUT,
   };
@@ -90,11 +91,18 @@ export const auth = (email, password) => {
         dispatch(checkAuthTimeout(res.data.expiresIn));
       })
       .catch((err) => {
-        dispatch(authFailed(err.response.data.error));
+        dispatch(authFailed(err.response.error));
       });
   };
 };
 
+export const spotifyAuthSccess = (spotifyToken, expireIn) => {
+  localStorage.setItem("spotify-token", spotifyToken);
+  return {
+    type: actionTypes.AUTH_SPOTIFY_SUCCESS,
+    spotifyToken,
+  };
+};
 
 export const authInit = () => {
   return (dispatch) => {
@@ -104,10 +112,16 @@ export const authInit = () => {
       if (expireAt > new Date()) {
         const userId = localStorage.getItem("userId");
         dispatch(authSuccess(userId, token));
-        dispatch(checkAuthTimeout((expireAt.getTime() - new Date().getTime())/1000));
+        dispatch(
+          checkAuthTimeout((expireAt.getTime() - new Date().getTime()) / 1000)
+        );
       } else {
         dispatch(logout());
       }
+    }
+    const spotifyToken = localStorage.getItem("spotify-token");
+    if (spotifyToken) {
+      dispatch(spotifyAuthSccess(spotifyToken));
     }
   };
 };

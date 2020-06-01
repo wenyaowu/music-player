@@ -5,10 +5,17 @@ const initialState = {
   userId: null,
   error: null,
   loading: false,
+  spotifyToken: null,
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case actionTypes.AUTH_SPOTIFY_SUCCESS: {
+      return {
+        ...state,
+        spotifyToken: action.spotifyToken,
+      };
+    }
     case actionTypes.AUTH_START: {
       return {
         ...state,
@@ -38,6 +45,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         token: null,
         userId: null,
+        spotifyToken: null,
       };
     }
     default: {
