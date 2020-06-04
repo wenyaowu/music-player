@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 import { signup, auth } from "../../../store/actions";
 import classes from "./Authentication.module.css";
 import Input from "../../../components/UI/Input/Input";
-import Button from "../../../components/UI/Button/Button";
+import Button from "@material-ui/core/Button";
+
 class Authentication extends Component {
   state = {
     form: {
@@ -96,8 +97,10 @@ class Authentication extends Component {
 
           <Button
             disabled={!this.state.formIsValid}
+            variant="contained"
+            color="primary"
             onClick={this.props.isSignUp ? this.onSignUp : this.onSignIn}
-            fullWidth={true}
+            // fullWidth={true}
           >
             {this.props.isSignUp ? "Sign Up" : "Sign In"}
           </Button>
@@ -105,7 +108,7 @@ class Authentication extends Component {
           {this.props.isSignUp ? (
             <p style={{ color: "#fff" }}>
               Already have an account?{" "}
-              <button 
+              <button
                 className={classes.SwitchModeButton}
                 onClick={this.props.onSwitchToSignIn}
               >

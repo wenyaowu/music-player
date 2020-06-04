@@ -6,6 +6,7 @@ import { play, pause, next, previous } from "../../store/actions";
 import TrackInfo from "../../components/MusicPlayer/TrackInfo/TrackInfo";
 import PlayControls from "../../components/MusicPlayer/PlayerControls/PlayerControls";
 import VolumeControl from "../../components/MusicPlayer/VolumeControl/VolumeControl";
+import SpoitifyPlayer from "./SpotfiyPlayer/SpotifyPlayer";
 
 class MusicPlayer extends Component {
   state = {
@@ -25,10 +26,6 @@ class MusicPlayer extends Component {
     this.setState({ volume: value / 100 });
   };
 
-  getPlayerRef = (player) => {
-    this.player = player;
-  };
-
   render() {
     /**
      * TODO: Enhance this
@@ -37,6 +34,10 @@ class MusicPlayer extends Component {
       this.props.queue.length <= 0
         ? null
         : this.props.queue[this.props.currentPlayingIndex];
+
+    const currentTrackSpotfiy = currentTrack
+      ? currentTrack.url.includes("spotify")
+      : false;
 
     return (
       <div className={classes.MusicPlayer}>
@@ -50,10 +51,10 @@ class MusicPlayer extends Component {
               progressInterval={500}
               height="1"
               width="1"
-              style={{display:"none"}}
-              ref={this.getPlayerRef}
+              style={{ display: "none" }}
               volume={this.state.volume}
             />
+
             <TrackInfo
               image={currentTrack.image}
               artist={currentTrack.artist}
@@ -70,7 +71,9 @@ class MusicPlayer extends Component {
             />
             <VolumeControl onVolumeChanged={this.onVolumeChangeHander} />
           </Fragment>
-        ) : "Select A Playlist to Start Playing"}
+        ) : (
+          "Select A Playlist to Start Playing"
+        )}
       </div>
     );
   }
@@ -86,7 +89,7 @@ const mapDispatchToProps = (dispatch) => ({
   onPlay: () => dispatch(play()),
   onPause: () => dispatch(pause()),
   onNext: () => dispatch(next()),
-  onPrevious: ()=>dispatch(previous())
+  onPrevious: () => dispatch(previous()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MusicPlayer);

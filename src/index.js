@@ -12,10 +12,17 @@ import playerReducer from "./store/reducers/player";
 import authReducer from "./store/reducers/auth";
 import searchReducer from "./store/reducers/search";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
+import { green, grey, purple } from "@material-ui/core/colors";
 
 const theme = createMuiTheme({
   palette: {
-    primary: { main: "#1cb954" },
+    type: "dark",
+    primary: {
+      main: green[700],
+    },
+    secondary: {
+      main: grey[700],
+    },
   },
 });
 

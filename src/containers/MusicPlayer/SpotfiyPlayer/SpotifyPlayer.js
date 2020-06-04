@@ -7,15 +7,16 @@ import axios from "axios";
 class SpotifyPlayer extends Component {
   state = {
     player: null,
+    playerReady: false,
   };
 
-  clientId = "4d94cfdd08f1457799ec2f61924b55ba";
+  clientId = "";
   scopes =
     "user-read-private user-read-email streaming user-modify-playback-state";
   redirectUri = "http://localhost:3000/spotify-callback";
   spotifyOAuth = `https://accounts.spotify.com/authorize?clent_id=${
     this.clientId
-  }&response_type=token&client_id=4d94cfdd08f1457799ec2f61924b55ba&scope=${encodeURIComponent(
+  }&response_type=token&client_id=${clientId}&scope=${encodeURIComponent(
     this.scopes
   )}&redirect_uri=${encodeURIComponent(this.redirectUri)}`;
 
@@ -32,9 +33,21 @@ class SpotifyPlayer extends Component {
           cb(spotifyToken);
         },
       });
-      player.addListener("player_state_changed", () => {});
       player.addListener("ready", ({ device_id }) => {
         console.log("Ready with Device ID", device_id);
+      });
+      player.addListener("player_state_changed", (state) => {
+        if (
+          this.state &&
+          state.track_window.previous_tracks.find(
+            (x) => x.id === state.track_window.current_track.id
+          ) &&
+          !this.state.paused &&
+          state.paused
+        ) {
+          this.props.onEnded();
+        }
+        this.state = state;
       });
 
       player.connect();
@@ -43,12 +56,10 @@ class SpotifyPlayer extends Component {
   };
 
   play = () => {
-    console.log(`[Device ID]: ${this.state.player._options.id}`);
-    console.log(this.props.spotifyToken);
     axios.put(
       `https://api.spotify.com/v1/me/player/play?device_id=${this.state.player._options.id}`,
       {
-        uris: ["spotify:track:67oXeTZpWaR6rfAEQc5JWS"],
+        uris: [this.props.url],
       },
       {
         headers: {
@@ -68,9 +79,9 @@ class SpotifyPlayer extends Component {
               url="https://sdk.scdn.co/spotify-player.js"
               onCreate={() => {}}
               onError={() => {}}
-              onLoad={() =>
-                this.spotifySDKloadedHandler(this.props.spotifyToken)
-              }
+              onLoad={() => {
+                this.spotifySDKloadedHandler(this.props.spotifyToken);
+              }}
             />
             <p>You are connect to Spotify</p>
             {this.state.player ? (

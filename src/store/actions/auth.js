@@ -1,5 +1,7 @@
 import axios from "axios";
 import * as actionTypes from "./actionTypes";
+
+const apiKey = ""
 export const authStart = () => {
   return {
     type: actionTypes.AUTH_START,
@@ -50,7 +52,7 @@ export const signup = (email, password) => {
     const url = "https://identitytoolkit.googleapis.com/v1/accounts:signUp";
 
     axios
-      .post(`${url}?key=AIzaSyBtHuqNEqQDhqw5HwaTXCA6edbdGnBqkes`, authData)
+      .post(`${url}?key=${apiKey}`, authData)
       .then((res) => {
         localStorage.setItem("token", res.data.idToken);
         localStorage.setItem(
@@ -79,7 +81,7 @@ export const auth = (email, password) => {
       "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword";
 
     axios
-      .post(`${url}?key=AIzaSyBtHuqNEqQDhqw5HwaTXCA6edbdGnBqkes`, authData)
+      .post(`${url}?key=${apiKey}`, authData)
       .then((res) => {
         localStorage.setItem("token", res.data.idToken);
         localStorage.setItem(
