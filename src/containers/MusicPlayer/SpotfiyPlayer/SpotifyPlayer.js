@@ -10,13 +10,13 @@ class SpotifyPlayer extends Component {
     playerReady: false,
   };
 
-  clientId = "";
+  clientId = process.env.REACT_APP_SPOTIFY_CLIENT_ID;
   scopes =
     "user-read-private user-read-email streaming user-modify-playback-state";
   redirectUri = "http://localhost:3000/spotify-callback";
   spotifyOAuth = `https://accounts.spotify.com/authorize?clent_id=${
     this.clientId
-  }&response_type=token&client_id=${clientId}&scope=${encodeURIComponent(
+  }&response_type=token&client_id=${this.clientId}&scope=${encodeURIComponent(
     this.scopes
   )}&redirect_uri=${encodeURIComponent(this.redirectUri)}`;
 

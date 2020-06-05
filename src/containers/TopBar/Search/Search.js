@@ -1,113 +1,93 @@
-import React, { Component } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { connect } from "react-redux";
 import TextField from "@material-ui/core/TextField";
-import { search, clearSearch,addTrackToPlaylist } from "../../../store/actions";
-import * as debounce from "lodash/debounce";
+import {
+  search,
+  clearSearch,
+  addTrackToPlaylist,
+} from "../../../store/actions";
 import classes from "./Search.module.css";
 import IconButton from "@material-ui/core/IconButton";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import SearchIcon from "@material-ui/icons/Search";
 import SearchResultItem from "./SearchResultItem/SearchResultItem";
+import useClickOutside from "../../../hooks/clickOutside";
+import useDebounce from "../../../hooks/debounce";
 
-class Search extends Component {
-  state = {
-    searchResultOpened: false,
-  };
+const Search = (props) => {
+  const { onSearch, onClearSearchResult } = props;
+  const searchboxRef = useRef();
+  const [searchResultOpened, setSearchResultOpened] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
-  componentDidMount() {
-    document.addEventListener("mousedown", this.handleClick, false);
-  }
-  componentWillUnmount() {
-    document.removeEventListener("mousedown", this.handleClick, false);
-  }
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
-  onInputChangeHandler = (event) => {
-    // Use this to trigger search
-    event.persist();
-    if (!this.debouncedFn) {
-      this.debouncedFn = debounce(() => {
-        let v = event.target.value;
-        if (v && v.length > 0) {
-          this.props.onSearch(v);
-        }
-        if (v.length === 0) {
-          this.props.onClearSearchResult();
-        }
-      }, 500);
+  useEffect(() => {
+    if (debouncedSearchTerm) {
+      onSearch(debouncedSearchTerm);
+    } else {
+      onClearSearchResult();
     }
-    this.debouncedFn();
+  }, [debouncedSearchTerm, onSearch, onClearSearchResult]);
+
+  const onCloseHandler = () => {
+    setSearchResultOpened(false);
   };
 
-  handleClick = (e) => {
-    if (this.node.contains(e.target)) {
-      return;
-    }
-    this.onCloseHandler();
+  const onOpenHandler = () => {
+    setSearchResultOpened(true);
   };
 
-  onCloseHandler = () => {
-    this.setState({
-      searchResultOpened: false,
-    });
+  const onInputChangeHandler = (event) => {
+    setSearchTerm(event.target.value);
   };
 
-  onOpenHandler = () => {
-    this.setState({
-      searchResultOpened: true,
-    });
-  };
+  useClickOutside(searchboxRef, onCloseHandler);
 
-  onSearchResultAddClickedHandler = (track) => {
+  const onSearchResultAddClickedHandler = (track) => {
     const playlistId = "iBo8IlkzZaykbdg1gtgJ";
     this.props.onAddTrack(playlistId, track);
     console.log("Add clicked: track", track);
   };
 
-  render() {
-    const searchResults = this.props.results.map((item, idx) => (
-      <SearchResultItem
-        key={`${item.title}-${item.artist}-${idx}`}
-        image={item.image}
-        title={item.title}
-        artist={item.artist}
-        addClick={() => this.onSearchResultAddClickedHandler(item)}
-      />
-    ));
+  const searchResults = props.results.map((item, idx) => (
+    <SearchResultItem
+      key={`${item.title}-${item.artist}-${idx}`}
+      image={item.image}
+      title={item.title}
+      artist={item.artist}
+      addClick={() => onSearchResultAddClickedHandler(item)}
+    />
+  ));
 
-    let dropdownContentClasses = [classes.DropdownContent];
-    if (!this.state.searchResultOpened) {
-      dropdownContentClasses.push(classes.Hide);
-    }
-
-    return (
-      <div
-        className={classes.Search}
-        ref={(node) => {
-          this.node = node;
-        }}
-      >
-        <TextField
-          onFocus={this.onOpenHandler}
-          style={{ backgroundColor: "#333", color: "white", width: "100%" }}
-          variant="outlined"
-          onChange={this.onInputChangeHandler}
-          InputProps={{
-            style: { color: "white" },
-            placeholder: "Search",
-            startAdornment: (
-              <InputAdornment position="start">
-                <IconButton style={{ color: "white" }}>
-                  <SearchIcon />
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-        />
-        <div className={dropdownContentClasses.join(" ")}>{searchResults}</div>
-      </div>
-    );
+  let dropdownContentClasses = [classes.DropdownContent];
+  if (!searchResultOpened) {
+    dropdownContentClasses.push(classes.Hide);
   }
-}
+
+  return (
+    <div className={classes.Search} ref={searchboxRef}>
+      <TextField
+        onFocus={onOpenHandler}
+        style={{ backgroundColor: "#333", color: "white", width: "100%" }}
+        variant="outlined"
+        onChange={onInputChangeHandler}
+        InputProps={{
+          style: { color: "white" },
+          placeholder: "Search",
+          startAdornment: (
+            <InputAdornment position="start">
+              <IconButton style={{ color: "white" }}>
+                <SearchIcon />
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
+      />
+      <div className={dropdownContentClasses.join(" ")}>{searchResults}</div>
+    </div>
+  );
+};
 
 const mapStateToProps = (state) => ({
   loading: state.search.loading,
@@ -116,7 +96,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onAddTrack: (playlistId, track) => dispatch(addTrackToPlaylist(playlistId, track)),
+  onAddTrack: (playlistId, track) =>
+    dispatch(addTrackToPlaylist(playlistId, track)),
   onSearch: (term) => dispatch(search(term)),
   onClearSearchResult: () => dispatch(clearSearch()),
 });

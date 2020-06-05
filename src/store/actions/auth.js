@@ -1,7 +1,7 @@
 import axios from "axios";
 import * as actionTypes from "./actionTypes";
 
-const apiKey = ""
+const apiKey = process.env.REACT_APP_FIREBASE_API_KEY;
 export const authStart = () => {
   return {
     type: actionTypes.AUTH_START,

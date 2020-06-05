@@ -6,7 +6,6 @@ import { play, pause, next, previous } from "../../store/actions";
 import TrackInfo from "../../components/MusicPlayer/TrackInfo/TrackInfo";
 import PlayControls from "../../components/MusicPlayer/PlayerControls/PlayerControls";
 import VolumeControl from "../../components/MusicPlayer/VolumeControl/VolumeControl";
-import SpoitifyPlayer from "./SpotfiyPlayer/SpotifyPlayer";
 
 class MusicPlayer extends Component {
   state = {
@@ -34,10 +33,6 @@ class MusicPlayer extends Component {
       this.props.queue.length <= 0
         ? null
         : this.props.queue[this.props.currentPlayingIndex];
-
-    const currentTrackSpotfiy = currentTrack
-      ? currentTrack.url.includes("spotify")
-      : false;
 
     return (
       <div className={classes.MusicPlayer}>
