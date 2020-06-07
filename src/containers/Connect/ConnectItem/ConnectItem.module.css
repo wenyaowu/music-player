@@ -1,0 +1,16 @@
+.ConnectItem {
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+
+.ConnectItem img {
+  width: auto;
+  height: 45px;
+}
+
+.ConnectItem p {
+  padding-left: 15px;
+}

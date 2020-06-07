@@ -38,3 +38,16 @@ export const previous = () => {
     type: actionTypes.PREVIOUS,
   };
 };
+
+
+export const spotifyPlayerReady = () => {
+  return {
+    type: actionTypes.SPOTIFY_PLAYER_READY
+  }
+}
+
+export const spotifyPlayerUnmount = () => {
+  return {
+    type: actionTypes.SPOTIFY_PLAYER_UNMOUNT
+  }
+}

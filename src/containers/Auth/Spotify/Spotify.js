@@ -17,7 +17,7 @@ const Spotify = (props) => {
     onSpotifyCallback(accessToken, expiresIn);
   }, [hash, onSpotifyCallback]);
 
-  return <Redirect to="/" />;
+  return <Redirect to="/connect" />;
 };
 
 const mapDispatchToProps = (dispatch) => ({

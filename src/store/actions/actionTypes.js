@@ -23,6 +23,9 @@ export const PAUSE = "[PLAYER] PAUSE";
 export const NEXT = "[PLAYER] NEXT";
 export const PREVIOUS = "[PLAYER] PREVIOUS";
 
+export const SPOTIFY_PLAYER_READY = "[PLAYER] SPOTIFY_PLAYER_READY";
+export const SPOTIFY_PLAYER_UNMOUNT = "[PLAYER] SPOTIFY_PLAYER_UNMOUNT";
+
 export const AUTH_START = "[AUTH] AUTH_START";
 export const AUTH_SUCCESS = "[AUTH] AUTH_SUCCESS";
 export const AUTH_FAILED = "[AUTH] AUTH_FAILED";

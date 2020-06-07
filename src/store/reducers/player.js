@@ -1,6 +1,7 @@
 import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
+  spotifyPlayerReady: false,
   playing: false,
   queue: [],
   currentPlayingIndex: 0,
@@ -8,6 +9,18 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case actionTypes.SPOTIFY_PLAYER_UNMOUNT: {
+      return {
+        ...state,
+        spotifyPlayerReady: false,
+      };
+    }
+    case actionTypes.SPOTIFY_PLAYER_READY: {
+      return {
+        ...state,
+        spotifyPlayerReady: true,
+      };
+    }
     case actionTypes.PLAY_TRACK: {
       return {
         ...state,

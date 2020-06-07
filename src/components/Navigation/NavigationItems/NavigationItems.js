@@ -14,7 +14,7 @@ const NavigationItems = () => {
           <HomeIcon /> <span style={{ paddingLeft: "10px" }}>Home</span>
         </div>
       </NavigationItem>
-      <NavigationItem link="/">
+      <NavigationItem link="/connect">
         <div className={classes.Link}>
           <SettingsEthernetIcon />{" "}
           <span style={{ paddingLeft: "10px" }}>Connect</span>
