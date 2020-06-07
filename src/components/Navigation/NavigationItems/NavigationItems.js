@@ -20,7 +20,7 @@ const NavigationItems = () => {
           <span style={{ paddingLeft: "10px" }}>Connect</span>
         </div>
       </NavigationItem>
-      <NavigationItem link="/">
+      <NavigationItem link="/account">
         {" "}
         <div className={classes.Link}>
           <AccountCircleIcon />{" "}

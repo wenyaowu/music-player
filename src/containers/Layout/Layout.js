@@ -9,7 +9,6 @@ class Layout extends Component {
       <Fragment>
         <div className={classes.Top}>
           <Navigation/>
-
           <div className={classes.Main}>
             <TopBar/>
             <main className={classes.Content}>{this.props.children}</main>

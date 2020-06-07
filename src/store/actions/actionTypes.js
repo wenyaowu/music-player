@@ -31,6 +31,7 @@ export const AUTH_SUCCESS = "[AUTH] AUTH_SUCCESS";
 export const AUTH_FAILED = "[AUTH] AUTH_FAILED";
 export const AUTH_INIT = "[AUTH] AUTH_INIT";
 export const AUTH_LOGOUT = "[AUTH] AUTH_LOGOUT";
+export const CLEAR_AUTH_ERROR = "[AUTH] CLEAR_AUTH_ERROR"
 
 export const AUTH_SPOTIFY = "[AUTH] AUTH_SPOTIFY";
 export const AUTH_SPOTIFY_SUCCESS = "[AUTH] AUTH_SPOTIFY_SUCCESS";

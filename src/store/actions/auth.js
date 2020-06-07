@@ -1,7 +1,13 @@
 import axios from "axios";
 import * as actionTypes from "./actionTypes";
-
 const apiKey = process.env.REACT_APP_FIREBASE_API_KEY;
+
+export const clearAuthError = () => {
+  return {
+    type: actionTypes.CLEAR_AUTH_ERROR
+  }
+}
+
 export const authStart = () => {
   return {
     type: actionTypes.AUTH_START,
@@ -64,7 +70,7 @@ export const signup = (email, password) => {
         dispatch(checkAuthTimeout(res.data.expiresIn));
       })
       .catch((err) => {
-        dispatch(authFailed(err.response.data.error));
+        dispatch(authFailed(err.response.data.error.message));
       });
   };
 };
@@ -93,7 +99,7 @@ export const auth = (email, password) => {
         dispatch(checkAuthTimeout(res.data.expiresIn));
       })
       .catch((err) => {
-        dispatch(authFailed(err.response.error));
+        dispatch(authFailed(err.response.data.error.message));
       });
   };
 };

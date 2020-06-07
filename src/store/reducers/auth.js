@@ -10,6 +10,12 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case actionTypes.CLEAR_AUTH_ERROR: {
+      return {
+        ...state,
+        error: null,
+      };
+    }
     case actionTypes.AUTH_SPOTIFY_SUCCESS: {
       return {
         ...state,

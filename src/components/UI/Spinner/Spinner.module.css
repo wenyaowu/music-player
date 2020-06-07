@@ -1,8 +1,8 @@
 .Spinner,
 .Spinner:after {
   border-radius: 50%;
-  width: 10em;
-  height: 10em;
+  width: 6em;
+  height: 6em;
 }
 .Spinner {
   margin: 60px auto;

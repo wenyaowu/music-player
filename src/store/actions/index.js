@@ -15,5 +15,5 @@ export {
   spotifyPlayerReady,
   spotifyPlayerUnmount,
 } from "./player";
-export { auth, signup, authInit, logout, spotifyAuthSccess } from "./auth";
+export { auth, signup, authInit, logout, spotifyAuthSccess, clearAuthError } from "./auth";
 export { search, clearSearch } from "./search";

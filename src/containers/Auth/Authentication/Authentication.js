@@ -1,9 +1,10 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { signup, auth } from "../../../store/actions";
 import classes from "./Authentication.module.css";
 import Input from "../../../components/UI/Input/Input";
 import Button from "@material-ui/core/Button";
+import Spinner from "../../../components/UI/Spinner/Spinner";
 
 class Authentication extends Component {
   state = {
@@ -80,59 +81,71 @@ class Authentication extends Component {
             ? "Sign up for free to access music on all platforms"
             : "Sign in to start listen to music from everywhere"}
         </h2>
-        <form>
-          {form.map((f) => {
-            return (
-              <Input
-                onChange={(event) => this.inputChangeHandler(event, f.id)}
-                key={f.id}
-                type={f.config.elementConfig.type}
-                placeholder={f.config.elementConfig.placeholder}
-                fullWidth={true}
-                value={f.config.value}
-                required={f.config.elementConfig.required}
-              />
-            );
-          })}
 
-          <Button
-            disabled={!this.state.formIsValid}
-            variant="contained"
-            color="primary"
-            onClick={this.props.isSignUp ? this.onSignUp : this.onSignIn}
-            // fullWidth={true}
-          >
-            {this.props.isSignUp ? "Sign Up" : "Sign In"}
-          </Button>
+        {this.props.loading ? (
+          <Spinner />
+        ) : (
+          <Fragment>
+            {this.props.error && (
+              <p className={classes.Error}> {this.props.error} </p>
+            )}
+            <form>
+              {form.map((f) => {
+                return (
+                  <Input
+                    onChange={(event) => this.inputChangeHandler(event, f.id)}
+                    key={f.id}
+                    type={f.config.elementConfig.type}
+                    placeholder={f.config.elementConfig.placeholder}
+                    fullWidth={true}
+                    value={f.config.value}
+                    required={f.config.elementConfig.required}
+                  />
+                );
+              })}
 
-          {this.props.isSignUp ? (
-            <p style={{ color: "#fff" }}>
-              Already have an account?{" "}
-              <button
-                className={classes.SwitchModeButton}
-                onClick={this.props.onSwitchToSignIn}
+              <Button
+                disabled={!this.state.formIsValid}
+                variant="contained"
+                color="primary"
+                onClick={this.props.isSignUp ? this.onSignUp : this.onSignIn}
               >
-                LOGIN
-              </button>
-            </p>
-          ) : (
-            <p style={{ color: "#fff" }}>
-              Don't have an account?{" "}
-              <button
-                className={classes.SwitchModeButton}
-                onClick={this.props.onSwitchToSignUp}
-              >
-                SIGN UP
-              </button>
-            </p>
-          )}
-        </form>
+                {this.props.isSignUp ? "Sign Up" : "Sign In"}
+              </Button>
+
+              {this.props.isSignUp ? (
+                <p style={{ color: "#fff" }}>
+                  Already have an account?{" "}
+                  <button
+                    className={classes.SwitchModeButton}
+                    onClick={this.props.onSwitchToSignIn}
+                  >
+                    LOGIN
+                  </button>
+                </p>
+              ) : (
+                <p style={{ color: "#fff" }}>
+                  Don't have an account?{" "}
+                  <button
+                    className={classes.SwitchModeButton}
+                    onClick={this.props.onSwitchToSignUp}
+                  >
+                    SIGN UP
+                  </button>
+                </p>
+              )}
+            </form>
+          </Fragment>
+        )}
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+  loading: state.auth.loading,
+  error: state.auth.error,
+});
 
 const mapDispatchToProps = (dispatch) => ({
   onSignUp: (email, password) => dispatch(signup(email, password)),

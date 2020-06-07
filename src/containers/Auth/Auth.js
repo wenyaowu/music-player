@@ -1,51 +1,52 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import Modal from "../../components/UI/Modal/Modal";
+import { connect } from "react-redux";
+import { clearAuthError } from "../../store/actions";
 import { AuthSteps } from "./auth.constants";
 import Welcome from "./Welcome/Welcome";
 import Authentication from "./Authentication/Authentication";
-class Auth extends Component {
-  state = {
-    authState: AuthSteps.WELCOME,
-    isSignUp: true,
+
+const Auth = (props) => {
+  const [authState, setAuthState] = useState(AuthSteps.WELCOME);
+  const [isSignUp, setIsSignUp] = useState(true);
+
+  const onTrasitionToSignInHandler = () => {
+    props.clearError();
+    setAuthState(AuthSteps.AUTHENTICATION);
+    setIsSignUp(false);
   };
 
-  onTrasitionToSignInHandler = () => {
-    this.setState({
-      authState: AuthSteps.AUTHENTICATION,
-      isSignUp: false,
-    });
+  const onTrasitionToSignUpHandler = () => {
+    props.clearError();
+    setAuthState(AuthSteps.AUTHENTICATION);
+    setIsSignUp(true);
   };
 
-  onTrasitionToSignUpHandler = () => {
-    this.setState({
-      authState: AuthSteps.AUTHENTICATION,
-      isSignUp: true,
-    });
-  };
-
-  render() {
-    let body = (
-      <Welcome
-        onSignUpClicked={this.onTrasitionToSignUpHandler}
-        onSignInClicked={this.onTrasitionToSignInHandler}
+  let body = (
+    <Welcome
+      onSignUpClicked={onTrasitionToSignUpHandler}
+      onSignInClicked={onTrasitionToSignInHandler}
+    />
+  );
+  if (authState === AuthSteps.AUTHENTICATION) {
+    body = (
+      <Authentication
+        isSignUp={isSignUp}
+        onSwitchToSignIn={onTrasitionToSignInHandler}
+        onSwitchToSignUp={onTrasitionToSignUpHandler}
       />
     );
-    if (this.state.authState === AuthSteps.AUTHENTICATION) {
-      body = (
-        <Authentication
-          isSignUp={this.state.isSignUp}
-          onSwitchToSignIn={this.onTrasitionToSignInHandler}
-          onSwitchToSignUp={this.onTrasitionToSignUpHandler}
-        />
-      );
-    }
-
-    return (
-      <div>
-        <Modal show={true}>{body}</Modal>
-      </div>
-    );
   }
-}
 
-export default Auth;
+  return (
+    <div>
+      <Modal show={true}>{body}</Modal>
+    </div>
+  );
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  clearError: () => dispatch(clearAuthError()),
+});
+
+export default connect(null, mapDispatchToProps)(Auth);

@@ -9,7 +9,8 @@ import Feed from "./containers/Feed/Feed";
 import Auth from "./containers/Auth/Auth";
 import { authInit } from "./store/actions";
 import Spotify from "./containers/Auth/Spotify/Spotify";
-import Connect from './containers/Connect/Connect';
+import Connect from "./containers/Connect/Connect";
+import Account from "./containers/Account/Account";
 
 const App = (props) => {
   const { onAuthInit } = props;
@@ -25,6 +26,7 @@ const App = (props) => {
             <Route path="/playlist" component={PlayList}></Route>
             <Route path="/logout" component={Logout}></Route>
             <Route path="/spotify-callback" component={Spotify}></Route>
+            <Route path="/account" component={Account}></Route>
             <Route path="/connect" component={Connect}></Route>
             <Route path="/" component={Feed} />
           </Switch>

@@ -14,3 +14,7 @@
 .ConnectItem p {
   padding-left: 15px;
 }
+
+.Active {
+  cursor: pointer;
+}

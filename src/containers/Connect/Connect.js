@@ -49,10 +49,10 @@ const Connect = (props) => {
           loggedIn={true}
           logoLoggedIn={SCLogoOrange}
           logoLoggedOut={SCLogoBlack}
-        />
-
+        /> 
         <ConnectItem
           platform="Youtube"
+          logoStyle={{ height: 30 }}
           onClickConnect={onClickYoutubeLoginHandler}
           loggedIn={false}
           logoLoggedIn={YoutubeColor}
